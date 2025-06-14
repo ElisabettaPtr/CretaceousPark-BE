@@ -1,9 +1,8 @@
 package com.petraccia.elisabetta.CretaceousPark.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.petraccia.elisabetta.CretaceousPark.spring_jwt.model.AuthUser;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +17,10 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // TODO : FOREIGN KEYS
+    private String fullName;
+
+    @OneToOne
+    @JsonBackReference(value = "admin-authUser")
+    private AuthUser authUser;
 
 }

@@ -1,6 +1,7 @@
 package com.petraccia.elisabetta.CretaceousPark.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.petraccia.elisabetta.CretaceousPark.spring_jwt.model.AuthUser;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -8,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @Entity
@@ -33,6 +33,8 @@ public class Customer {
     @JsonBackReference(value = "customer-wallet")
     private Wallet wallet;
 
-    // TODO : FOREIGN KEYS
+    @OneToOne
+    @JsonBackReference(value = "customer-authUser")
+    private AuthUser authUser;
 
 }
