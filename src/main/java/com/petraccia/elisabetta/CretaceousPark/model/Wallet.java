@@ -25,8 +25,8 @@ public class Wallet {
     @Column(nullable = false)
     private LocalTime createdAt;
 
-    @Column(nullable = false)
-    private boolean updatedAt;
+    @Column
+    private LocalTime updatedAt;
 
     @OneToOne
     @JsonBackReference(value = "customer-wallet")

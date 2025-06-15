@@ -27,19 +27,7 @@ public class AuthDataLoadRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Role r_admin = new Role();
-        r_admin.setName(ERole.ROLE_ADMIN);
-        authRoleRepository.save(r_admin);
 
-        Role r_customer = new Role();
-        r_customer.setName(ERole.ROLE_CUSTOMER);
-        authRoleRepository.save(r_customer);
-
-        AuthUser u_admin = new AuthUser("user_admin", "adminEmail@gmail.com", encoder.encode("mygoodpassword"), r_admin);
-        authUserRepository.save(u_admin);
-
-        AuthUser u_customer = new AuthUser("user_customer", "customerEmail@gmail.com", encoder.encode("mygoodpassword"), r_customer);
-        authUserRepository.save(u_customer);
 
     }
 }   

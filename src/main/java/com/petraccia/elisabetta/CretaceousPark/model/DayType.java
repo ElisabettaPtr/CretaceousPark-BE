@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
-import java.util.List;
 
 @Data
 @Entity
@@ -21,13 +20,8 @@ public class DayType {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String description;
-
-    @Column(nullable = false)
     private LocalTime openTime;
 
-    @Column(nullable = false)
     private LocalTime closeTime;
 
     @Column(nullable = false)

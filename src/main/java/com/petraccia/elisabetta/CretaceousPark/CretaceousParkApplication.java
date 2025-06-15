@@ -20,6 +20,7 @@ public class CretaceousParkApplication {
 
 
 		// TODO : Zone, Attraction and Show DTOs
+		// TODO : Booking, Planner and Ticket -> create entities in DataLoadRunner
 	}
 
 }

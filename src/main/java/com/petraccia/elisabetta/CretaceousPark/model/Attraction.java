@@ -19,7 +19,7 @@ public class Attraction {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     private String description;
 
     @Column(nullable = false)
