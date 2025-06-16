@@ -18,9 +18,7 @@ public class CretaceousParkApplication {
 
 		SpringApplication.run(CretaceousParkApplication.class, args);
 
-
 		// TODO : Zone, Attraction and Show DTOs
-		// TODO : Booking, Planner and Ticket -> create entities in DataLoadRunner
 	}
 
 }

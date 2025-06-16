@@ -682,6 +682,231 @@ public class DataLoadRunner implements CommandLineRunner {
         buildADino.setZone(zone7);
         showRepository.save(buildADino);
 
+        //Creazione dei Planner
+
+        Planner planner1 = new Planner();
+        planner1.setCustomer(customer1);
+        planner1.setDate(LocalDate.of(2025, 7,7));
+        planner1.setDayType(summer);
+
+        Planner planner2 = new Planner();
+        planner2.setCustomer(customer2);
+        planner2.setDate(LocalDate.of(2025, 7,7));
+        planner2.setDayType(summer);
+
+        Planner planner3 = new Planner();
+        planner3.setCustomer(customer3);
+        planner3.setDate(LocalDate.of(2025, 7,7));
+        planner3.setDayType(summer);
+
+        List<Planner> planners = List.of(planner1, planner2, planner3);
+        plannerRepository.saveAll(planners);
+
+        // Creazione dei Ticket
+        Ticket ticket1 = new Ticket();
+        ticket1.setDate(LocalDate.of(2025, 7,7));
+        ticket1.setPrice(new BigDecimal("20.00"));
+        ticket1.setAttraction(tyrannosaurus);
+        ticket1.setPlanner(planner2);
+
+        Ticket ticket2 = new Ticket();
+        ticket2.setDate(LocalDate.of(2025, 7,7));
+        ticket2.setPrice(new BigDecimal("20.00"));
+        ticket2.setAttraction(tyrannosaurus);
+        ticket2.setPlanner(planner1);
+
+        Ticket ticket3 = new Ticket();
+        ticket3.setDate(LocalDate.of(2025, 7,7));
+        ticket3.setPrice(new BigDecimal("20.00"));
+        ticket3.setAttraction(tyrannosaurus);
+        ticket2.setPlanner(planner1);
+
+        Ticket ticket4 = new Ticket();
+        ticket4.setDate(LocalDate.of(2025, 7,7));
+        ticket4.setPrice(new BigDecimal("20.00"));
+        ticket4.setAttraction(mosasaurus);
+        ticket4.setPlanner(planner3);
+
+        Ticket ticket5 = new Ticket();
+        ticket5.setDate(LocalDate.of(2025, 7,7));
+        ticket5.setPrice(new BigDecimal("20.00"));
+        ticket5.setAttraction(mosasaurus);
+        ticket5.setPlanner(planner3);
+
+        Ticket ticket6 = new Ticket();
+        ticket6.setDate(LocalDate.of(2025, 7,7));
+        ticket6.setPrice(new BigDecimal("20.00"));
+        ticket6.setAttraction(mosasaurus);
+        ticket6.setPlanner(planner3);
+
+        Ticket ticket7 = new Ticket();
+        ticket7.setDate(LocalDate.of(2025, 7,7));
+        ticket7.setPrice(new BigDecimal("20.00"));
+        ticket7.setAttraction(velociraptor);
+
+        Ticket ticket8 = new Ticket();
+        ticket8.setDate(LocalDate.of(2025, 7,7));
+        ticket8.setPrice(new BigDecimal("20.00"));
+        ticket8.setAttraction(velociraptor);
+
+        Ticket ticket9 = new Ticket();
+        ticket9.setDate(LocalDate.of(2025, 7,7));
+        ticket9.setPrice(new BigDecimal("20.00"));
+        ticket9.setAttraction(velociraptor);
+        ticket9.setPlanner(planner2);
+
+        Ticket ticket10 = new Ticket();
+        ticket10.setDate(LocalDate.of(2025, 7,7));
+        ticket10.setPrice(new BigDecimal("20.00"));
+        ticket10.setAttraction(triceratops);
+
+        Ticket ticket11 = new Ticket();
+        ticket11.setDate(LocalDate.of(2025, 7,7));
+        ticket11.setPrice(new BigDecimal("20.00"));
+        ticket11.setAttraction(triceratops);
+        ticket2.setPlanner(planner1);
+
+        Ticket ticket12 = new Ticket();
+        ticket12.setDate(LocalDate.of(2025, 7,7));
+        ticket12.setPrice(new BigDecimal("20.00"));
+        ticket12.setAttraction(triceratops);
+        ticket2.setPlanner(planner1);
+
+        Ticket ticket13 = new Ticket();
+        ticket13.setDate(LocalDate.of(2025, 7,7));
+        ticket13.setPrice(new BigDecimal("20.00"));
+        ticket13.setShow(marineMonsters);
+
+        Ticket ticket14 = new Ticket();
+        ticket14.setDate(LocalDate.of(2025, 7,7));
+        ticket14.setPrice(new BigDecimal("20.00"));
+        ticket14.setShow(marineMonsters);
+
+        Ticket ticket15 = new Ticket();
+        ticket15.setDate(LocalDate.of(2025, 7,7));
+        ticket15.setPrice(new BigDecimal("20.00"));
+        ticket15.setShow(marineMonsters);
+        ticket15.setPlanner(planner1);
+
+        Ticket ticket16 = new Ticket();
+        ticket16.setDate(LocalDate.of(2025, 7,7));
+        ticket16.setPrice(new BigDecimal("20.00"));
+        ticket16.setShow(marineMonsters);
+        ticket16.setPlanner(planner1);
+
+        Ticket ticket17 = new Ticket();
+        ticket17.setDate(LocalDate.of(2025, 7,7));
+        ticket17.setPrice(new BigDecimal("20.00"));
+        ticket17.setShow(marineMonsters);
+
+        Ticket ticket18 = new Ticket();
+        ticket18.setDate(LocalDate.of(2025, 7,7));
+        ticket18.setPrice(new BigDecimal("20.00"));
+        ticket18.setShow(marineMonsters);
+        ticket18.setPlanner(planner2);
+
+        Ticket ticket19 = new Ticket();
+        ticket19.setDate(LocalDate.of(2025, 7,7));
+        ticket19.setPrice(new BigDecimal("20.00"));
+        ticket19.setShow(raptorTactics);
+        ticket19.setPlanner(planner2);
+
+        Ticket ticket20 = new Ticket();
+        ticket20.setDate(LocalDate.of(2025, 7,7));
+        ticket20.setPrice(new BigDecimal("20.00"));
+        ticket20.setShow(raptorTactics);
+
+        Ticket ticket21 = new Ticket();
+        ticket21.setDate(LocalDate.of(2025, 7,7));
+        ticket21.setPrice(new BigDecimal("20.00"));
+        ticket21.setShow(raptorTactics);
+
+        Ticket ticket22 = new Ticket();
+        ticket22.setDate(LocalDate.of(2025, 7,7));
+        ticket22.setPrice(new BigDecimal("20.00"));
+        ticket22.setShow(raptorTactics);
+
+        Ticket ticket23 = new Ticket();
+        ticket23.setDate(LocalDate.of(2025, 7,7));
+        ticket23.setPrice(new BigDecimal("20.00"));
+        ticket23.setShow(raptorTactics);
+        ticket23.setPlanner(planner1);
+
+        Ticket ticket24 = new Ticket();
+        ticket24.setDate(LocalDate.of(2025, 7,7));
+        ticket24.setPrice(new BigDecimal("20.00"));
+        ticket24.setShow(raptorTactics);
+        ticket24.setPlanner(planner1);
+
+        Ticket ticket25 = new Ticket();
+        ticket25.setDate(LocalDate.of(2025, 7,7));
+        ticket25.setPrice(new BigDecimal("20.00"));
+        ticket25.setShow(fossilsUncovered);
+
+        Ticket ticket26 = new Ticket();
+        ticket26.setDate(LocalDate.of(2025, 7,7));
+        ticket26.setPrice(new BigDecimal("20.00"));
+        ticket26.setShow(fossilsUncovered);
+        ticket26.setPlanner(planner1);
+
+        Ticket ticket27 = new Ticket();
+        ticket27.setDate(LocalDate.of(2025, 7,7));
+        ticket27.setPrice(new BigDecimal("20.00"));
+        ticket27.setShow(fossilsUncovered);
+        ticket27.setPlanner(planner1);
+
+        Ticket ticket28 = new Ticket();
+        ticket28.setDate(LocalDate.of(2025, 7,7));
+        ticket28.setPrice(new BigDecimal("20.00"));
+        ticket28.setShow(fossilsUncovered);
+        ticket28.setPlanner(planner3);
+
+        Ticket ticket29 = new Ticket();
+        ticket29.setDate(LocalDate.of(2025, 7,7));
+        ticket29.setPrice(new BigDecimal("20.00"));
+        ticket29.setShow(fossilsUncovered);
+        ticket29.setPlanner(planner3);
+
+        Ticket ticket30 = new Ticket();
+        ticket30.setDate(LocalDate.of(2025, 7,7));
+        ticket30.setPrice(new BigDecimal("20.00"));
+        ticket30.setShow(fossilsUncovered);
+        ticket30.setPlanner(planner3);
+
+        List<Ticket> tickets = List.of(ticket1, ticket2, ticket3, ticket4, ticket5, ticket6, ticket7, ticket8, ticket9, ticket10, ticket11,ticket12, ticket13, ticket14, ticket15, ticket16, ticket17, ticket18, ticket19, ticket20, ticket21, ticket22, ticket23, ticket24, ticket25, ticket26, ticket27, ticket28, ticket29, ticket30);
+        ticketRepository.saveAll(tickets);
+
+        // Creazione dei Booking
+        Booking booking1 = new Booking();
+        booking1.setDate(LocalDate.of(2025, 7,7));
+        booking1.setBookable(bookable1);
+        booking1.setPlanner(planner2);
+
+        Booking booking2 = new Booking();
+        booking2.setDate(LocalDate.of(2025, 7,7));
+        booking2.setBookable(bookable2);
+        booking2.setPlanner(planner2);
+
+        Booking booking3 = new Booking();
+        booking3.setDate(LocalDate.of(2025, 7,7));
+        booking3.setRestaurant(restaurant1);
+        booking3.setPlanner(planner2);
+
+        Booking booking4 = new Booking();
+        booking4.setDate(LocalDate.of(2025, 7,7));
+        booking4.setRestaurant(restaurant2);
+        booking4.setReservationQty(2);
+        booking4.setPlanner(planner1);
+
+        Booking booking5 = new Booking();
+        booking5.setDate(LocalDate.of(2025, 7,7));
+        booking5.setRestaurant(restaurant3);
+        booking5.setReservationQty(3);
+        booking5.setPlanner(planner3);
+
+        List<Booking> bookings = List.of(booking1, booking2, booking3, booking4, booking5);
+        bookingRepository.saveAll(bookings);
+
     }
 
 }
