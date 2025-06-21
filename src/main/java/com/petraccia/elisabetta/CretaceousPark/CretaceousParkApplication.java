@@ -18,7 +18,11 @@ public class CretaceousParkApplication {
 
 		SpringApplication.run(CretaceousParkApplication.class, args);
 
-		// TODO : Zone, Attraction and Show DTOs
+		// TODO : continue with services (from Booking)
+		// TODO : controllers (remember QR code generator for Ticket and PDF generators for some infos)
+		// TODO : some tests
+		// TODO : postman folder
+
 	}
 
 }
