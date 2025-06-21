@@ -1,21 +1,19 @@
 package com.petraccia.elisabetta.CretaceousPark.dto;
 
+import com.petraccia.elisabetta.CretaceousPark.enums.DangerLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CustomerDTO {
+public class AttractionDTO {
     private Long id;
-    private String firstname;
-    private String lastname;
-    private LocalDate birthdate;
-    private Long authUserId;
-    private Long walletId;
+    private String name;
+    private String description;
+    private DangerLevel dangerLevel;
+    private Long zoneId;
 }

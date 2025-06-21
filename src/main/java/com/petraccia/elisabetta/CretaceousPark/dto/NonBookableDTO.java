@@ -5,17 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class CustomerDTO {
+public class NonBookableDTO {
     private Long id;
-    private String firstname;
-    private String lastname;
-    private LocalDate birthdate;
-    private Long authUserId;
-    private Long walletId;
+    private String name;
+    private Long typeServiceId;
 }

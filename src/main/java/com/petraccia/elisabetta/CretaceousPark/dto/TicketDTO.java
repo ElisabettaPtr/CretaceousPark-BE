@@ -5,17 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class CustomerDTO {
+public class TicketDTO {
     private Long id;
-    private String firstname;
-    private String lastname;
-    private LocalDate birthdate;
-    private Long authUserId;
-    private Long walletId;
+    private LocalDate date;
+    private BigDecimal price;
+    private boolean isSold;
+    private Long attractionId;
+    private Long showId;
+    private Long plannerId;
 }
+

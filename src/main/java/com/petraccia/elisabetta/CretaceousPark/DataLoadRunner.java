@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -178,31 +179,31 @@ public class DataLoadRunner implements CommandLineRunner {
         // Creazione dei Wallet
         Wallet wallet1 = new Wallet();
         wallet1.setBalance(new BigDecimal("100.00"));
-        wallet1.setCreatedAt(LocalTime.now());
+        wallet1.setCreatedAt(LocalDateTime.now());
         wallet1.setUpdatedAt(null);
         wallet1.setCustomer(customer1);
 
         Wallet wallet2 = new Wallet();
         wallet2.setBalance(new BigDecimal("250.50"));
-        wallet2.setCreatedAt(LocalTime.now());
+        wallet2.setCreatedAt(LocalDateTime.now());
         wallet2.setUpdatedAt(null);
         wallet2.setCustomer(customer2);
 
         Wallet wallet3 = new Wallet();
         wallet3.setBalance(new BigDecimal("55.00"));
-        wallet3.setCreatedAt(LocalTime.now());
+        wallet3.setCreatedAt(LocalDateTime.now());
         wallet3.setUpdatedAt(null);
         wallet3.setCustomer(customer3);
 
         Wallet wallet4 = new Wallet();
         wallet4.setBalance(new BigDecimal("500.00"));
-        wallet4.setCreatedAt(LocalTime.now());
+        wallet4.setCreatedAt(LocalDateTime.now());
         wallet4.setUpdatedAt(null);
         wallet4.setCustomer(customer4);
 
         Wallet wallet5 = new Wallet();
         wallet5.setBalance(new BigDecimal("75.25"));
-        wallet5.setCreatedAt(LocalTime.now());
+        wallet5.setCreatedAt(LocalDateTime.now());
         wallet5.setUpdatedAt(null);
         wallet5.setCustomer(customer5);
 
@@ -214,7 +215,7 @@ public class DataLoadRunner implements CommandLineRunner {
 
         // Aggiorna solo wallet3
         wallet3.setBalance(new BigDecimal("110.00"));
-        wallet3.setUpdatedAt(LocalTime.now());
+        wallet3.setUpdatedAt(LocalDateTime.now());
         walletRepository.save(wallet3);
 
         // Creazione dei Restaurant

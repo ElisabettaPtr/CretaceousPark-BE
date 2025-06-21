@@ -1,8 +1,10 @@
 package com.petraccia.elisabetta.CretaceousPark.service;
 
+import com.petraccia.elisabetta.CretaceousPark.dto.AdminDTO;
 import com.petraccia.elisabetta.CretaceousPark.exception.BadRequestException;
 import com.petraccia.elisabetta.CretaceousPark.exception.ConflictException;
 import com.petraccia.elisabetta.CretaceousPark.exception.ResourceNotFoundException;
+import com.petraccia.elisabetta.CretaceousPark.mapper.AdminMapper;
 import com.petraccia.elisabetta.CretaceousPark.model.Admin;
 import com.petraccia.elisabetta.CretaceousPark.repository.AdminRepository;
 import com.petraccia.elisabetta.CretaceousPark.spring_jwt.model.AuthUser;
@@ -12,58 +14,56 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AdminService {
 
     private final AdminRepository adminRepository;
-
     private final AuthUserRepository authUserRepository;
 
     @Autowired
-    public AdminService (AdminRepository adminRepository, AuthUserRepository authUserRepository){
+    public AdminService(AdminRepository adminRepository, AuthUserRepository authUserRepository) {
         this.adminRepository = adminRepository;
         this.authUserRepository = authUserRepository;
     }
 
-    public List<Admin> getAllAdmins() {
-        return adminRepository.findAll();
+    public List<AdminDTO> getAllAdmins() {
+        return adminRepository.findAll()
+                .stream()
+                .map(AdminMapper::toDTO)
+                .toList();
     }
 
-    public Admin getAdminById(Long id) {
-
+    public AdminDTO getAdminById(Long id) {
         if (id == null) {
             throw new BadRequestException("ID must not be null.");
         }
 
-        return adminRepository.findById(id)
+        Admin admin = adminRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Admin not found with id: " + id));
 
+        return AdminMapper.toDTO(admin);
     }
 
-    public Admin saveAdmin(Admin admin) {
-
-        if (admin.getAuthUser() == null) {
-            throw new BadRequestException("AuthUser must not be null.");
+    public AdminDTO saveAdmin(AdminDTO adminDTO) {
+        if (adminDTO.getAuthUserId() == null) {
+            throw new BadRequestException("AuthUserId must not be null.");
         }
 
-        Long authUserId = admin.getAuthUser().getId();
-        if (authUserId == null || !authUserRepository.existsById(authUserId)) {
-            throw new ResourceNotFoundException("AuthUser not found with id: " + authUserId);
-        }
+        AuthUser authUser = authUserRepository.findById(adminDTO.getAuthUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("AuthUser not found with id: " + adminDTO.getAuthUserId()));
 
-        if (adminRepository.existsByAuthUser(admin.getAuthUser())) {
+        if (adminRepository.existsByAuthUser(authUser)) {
             throw new ConflictException("This AuthUser is already assigned to another Admin/Customer.");
         }
 
-        return adminRepository.save(admin);
-
+        Admin adminToSave = AdminMapper.toEntity(adminDTO, authUser);
+        Admin savedAdmin = adminRepository.save(adminToSave);
+        return AdminMapper.toDTO(savedAdmin);
     }
 
     @Transactional
     public void deleteAdminById(Long id) {
-
         if (id == null) {
             throw new BadRequestException("ID must not be null.");
         }
@@ -78,29 +78,31 @@ public class AdminService {
         }
 
         adminRepository.deleteById(id);
-
     }
 
-    public Admin updateAdmin(Long id, Admin admin) {
-
+    public AdminDTO updateAdmin(Long id, AdminDTO adminDTO) {
         if (id == null) {
             throw new BadRequestException("ID must not be null.");
         }
 
-        if (admin == null) {
+        if (adminDTO == null) {
             throw new BadRequestException("Admin data must not be null.");
         }
 
         Admin existingAdmin = adminRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Admin not found with id: " + id));
 
-        existingAdmin.setFullName(admin.getFullName());
-        existingAdmin.setAuthUser(admin.getAuthUser());
+        AuthUser authUser = null;
+        if (adminDTO.getAuthUserId() != null) {
+            authUser = authUserRepository.findById(adminDTO.getAuthUserId())
+                    .orElseThrow(() -> new ResourceNotFoundException("AuthUser not found with id: " + adminDTO.getAuthUserId()));
+        }
 
-        return adminRepository.save(existingAdmin);
+        existingAdmin.setFullName(adminDTO.getFullName());
+        existingAdmin.setAuthUser(authUser);
 
+        Admin updated = adminRepository.save(existingAdmin);
+        return AdminMapper.toDTO(updated);
     }
-
-    // TODO : MODIFY -> adapt to DTO
-
 }
+

@@ -5,12 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-public class AdminDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+public class RestaurantDTO {
     private Long id;
-    private String fullName;
-    private Long authUserId;
+    private String name;
+    private String kitchenType;
+    private List<Long> bookingIds;
 }
+

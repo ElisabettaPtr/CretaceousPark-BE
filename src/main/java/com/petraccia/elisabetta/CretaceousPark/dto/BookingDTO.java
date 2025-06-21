@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class CustomerDTO {
+public class BookingDTO {
     private Long id;
-    private String firstname;
-    private String lastname;
-    private LocalDate birthdate;
-    private Long authUserId;
-    private Long walletId;
+    private LocalDate date;
+    private int reservationQty;
+    private Long restaurantId;
+    private Long bookableId;
+    private Long plannerId;
 }

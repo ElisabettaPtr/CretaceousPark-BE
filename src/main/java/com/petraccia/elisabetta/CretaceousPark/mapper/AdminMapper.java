@@ -10,19 +10,24 @@ public class AdminMapper {
         if (admin == null) {
             return null;
         }
-        Long authUserId = (admin.getAuthUser() != null) ? admin.getAuthUser().getId() : null;
-        return new AdminDTO(admin.getId(), admin.getFullName(), authUserId);
+
+        return AdminDTO.builder()
+                .id(admin.getId())
+                .fullName(admin.getFullName())
+                .authUserId(admin.getAuthUser() != null ? admin.getAuthUser().getId() : null)
+                .build();
     }
 
     public static Admin toEntity(AdminDTO dto, AuthUser authUser) {
         if (dto == null) {
             return null;
         }
-        Admin admin = new Admin();
-        admin.setId(dto.getId());
-        admin.setFullName(dto.getFullName());
-        admin.setAuthUser(authUser);  // qui passi l'entità AuthUser completa
-        return admin;
-    }
 
+        return Admin.builder()
+                .id(dto.getId())
+                .fullName(dto.getFullName())
+                .authUser(authUser)
+                .build();
+    }
 }
+

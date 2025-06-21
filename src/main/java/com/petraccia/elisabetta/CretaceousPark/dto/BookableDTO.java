@@ -5,17 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class CustomerDTO {
+public class BookableDTO {
     private Long id;
-    private String firstname;
-    private String lastname;
-    private LocalDate birthdate;
-    private Long authUserId;
-    private Long walletId;
+    private String name;
+    private BigDecimal price;
+    private Long typeServiceId;
 }

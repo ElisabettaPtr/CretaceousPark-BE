@@ -1,9 +1,10 @@
 package com.petraccia.elisabetta.CretaceousPark.service;
 
+import com.petraccia.elisabetta.CretaceousPark.dto.CustomerDTO;
 import com.petraccia.elisabetta.CretaceousPark.exception.BadRequestException;
 import com.petraccia.elisabetta.CretaceousPark.exception.ConflictException;
 import com.petraccia.elisabetta.CretaceousPark.exception.ResourceNotFoundException;
-import com.petraccia.elisabetta.CretaceousPark.model.Admin;
+import com.petraccia.elisabetta.CretaceousPark.mapper.CustomerMapper;
 import com.petraccia.elisabetta.CretaceousPark.model.Customer;
 import com.petraccia.elisabetta.CretaceousPark.repository.CustomerRepository;
 import com.petraccia.elisabetta.CretaceousPark.spring_jwt.model.AuthUser;
@@ -13,73 +14,70 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-
     private final AuthUserRepository authUserRepository;
 
     @Autowired
-    public CustomerService (CustomerRepository customerRepository, AuthUserRepository authUserRepository){
+    public CustomerService(CustomerRepository customerRepository, AuthUserRepository authUserRepository) {
         this.customerRepository = customerRepository;
         this.authUserRepository = authUserRepository;
     }
 
-    public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+    public List<CustomerDTO> getAllCustomers() {
+        return customerRepository.findAll()
+                .stream()
+                .map(CustomerMapper::toDTO)
+                .toList();
     }
 
-    public Customer getCustomerById(Long id) {
+    public CustomerDTO getCustomerById(Long id) {
         if (id == null) {
             throw new BadRequestException("ID must not be null.");
         }
 
-        return customerRepository.findById(id)
+        Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
 
+        return CustomerMapper.toDTO(customer);
     }
 
-    public Customer getCustomerByAuthUserId(Long authUserId) {
-
+    public CustomerDTO getCustomerByAuthUserId(Long authUserId) {
         if (authUserId == null) {
             throw new BadRequestException("AuthUser ID must not be null.");
         }
 
         Customer customer = customerRepository.findByAuthUserId(authUserId);
-
         if (customer == null) {
             throw new ResourceNotFoundException("Customer not found with AuthUser ID: " + authUserId);
         }
 
-        return customer;
-
+        return CustomerMapper.toDTO(customer);
     }
 
-    public Customer saveCustomer(Customer customer) {
-
-        if (customer.getAuthUser() == null) {
-            throw new BadRequestException("AuthUser must not be null.");
+    public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
+        if (customerDTO.getAuthUserId() == null) {
+            throw new BadRequestException("AuthUser ID must not be null.");
         }
 
-        Long authUserId = customer.getAuthUser().getId();
-        if (authUserId == null || !authUserRepository.existsById(authUserId)) {
-            throw new ResourceNotFoundException("AuthUser not found with id: " + authUserId);
-        }
+        AuthUser authUser = authUserRepository.findById(customerDTO.getAuthUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("AuthUser not found with id: " + customerDTO.getAuthUserId()));
 
-        if (customerRepository.existsByAuthUser(customer.getAuthUser())) {
+        if (customerRepository.existsByAuthUser(authUser)) {
             throw new ConflictException("This AuthUser is already assigned to another Admin/Customer.");
         }
 
-        return customerRepository.save(customer);
-
+        // Non passiamo Wallet all'inizio perché è null alla creazione
+        Customer customerToSave = CustomerMapper.toEntity(customerDTO, authUser, null);
+        Customer savedCustomer = customerRepository.save(customerToSave);
+        return CustomerMapper.toDTO(savedCustomer);
     }
 
     @Transactional
     public void deleteCustomerById(Long id) {
-
         if (id == null) {
             throw new BadRequestException("ID must not be null.");
         }
@@ -89,34 +87,38 @@ public class CustomerService {
 
         AuthUser user = customer.getAuthUser();
         if (user != null) {
-            user.setAdmin(null);
+            user.setCustomer(null);
             authUserRepository.save(user);
         }
 
         customerRepository.deleteById(id);
-
     }
 
-    public Customer updateCustomer(Long id, Customer customer) {
+    public CustomerDTO updateCustomer(Long id, CustomerDTO customerDTO) {
         if (id == null) {
             throw new BadRequestException("ID must not be null.");
         }
 
-        if (customer == null) {
+        if (customerDTO == null) {
             throw new BadRequestException("Customer data must not be null.");
         }
 
         Customer existingCustomer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
 
-        existingCustomer.setFirstname(customer.getFirstname());
-        existingCustomer.setLastname(customer.getLastname());
-        existingCustomer.setBirthdate(customer.getBirthdate());
-        existingCustomer.setWallet(customer.getWallet());
-        existingCustomer.setAuthUser(customer.getAuthUser());
+        AuthUser authUser = null;
+        if (customerDTO.getAuthUserId() != null) {
+            authUser = authUserRepository.findById(customerDTO.getAuthUserId())
+                    .orElseThrow(() -> new ResourceNotFoundException("AuthUser not found with id: " + customerDTO.getAuthUserId()));
+        }
 
-        return customerRepository.save(existingCustomer);
+        existingCustomer.setFirstname(customerDTO.getFirstname());
+        existingCustomer.setLastname(customerDTO.getLastname());
+        existingCustomer.setBirthdate(customerDTO.getBirthdate());
+        existingCustomer.setAuthUser(authUser);
+        // Il wallet resta invariato, o può essere gestito separatamente
+
+        Customer updatedCustomer = customerRepository.save(existingCustomer);
+        return CustomerMapper.toDTO(updatedCustomer);
     }
-
-    // TODO : MODIFY -> adapt to DTO
 }

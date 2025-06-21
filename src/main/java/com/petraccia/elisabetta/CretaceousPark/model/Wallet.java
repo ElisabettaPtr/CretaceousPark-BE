@@ -3,16 +3,18 @@ package com.petraccia.elisabetta.CretaceousPark.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Wallet {
 
     @Id
@@ -23,10 +25,10 @@ public class Wallet {
     private BigDecimal balance;
 
     @Column(nullable = false)
-    private LocalTime createdAt;
+    private LocalDateTime createdAt;
 
     @Column
-    private LocalTime updatedAt;
+    private LocalDateTime updatedAt;
 
     @OneToOne
     @JsonBackReference(value = "customer-wallet")

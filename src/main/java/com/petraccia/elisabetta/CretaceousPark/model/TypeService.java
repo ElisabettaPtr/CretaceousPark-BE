@@ -3,6 +3,7 @@ package com.petraccia.elisabetta.CretaceousPark.model;
 import com.petraccia.elisabetta.CretaceousPark.enums.AvailabilityStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class TypeService {
 
     @Id
@@ -20,8 +22,6 @@ public class TypeService {
 
     @Column(nullable = false)
     private AvailabilityStatus type;
-
-    // TODO : to decide whether or not lists are needed
 
     @OneToMany(mappedBy = "typeService")
     private List<Bookable> bookableServices;

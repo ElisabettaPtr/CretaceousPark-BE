@@ -10,27 +10,26 @@ public class CustomerMapper {
     public static CustomerDTO toDTO(Customer customer) {
         if (customer == null) return null;
 
-        return new CustomerDTO(
-                customer.getId(),
-                customer.getFirstname(),
-                customer.getLastname(),
-                customer.getBirthdate(),
-                customer.getAuthUser() != null ? customer.getAuthUser().getId() : null,
-                customer.getWallet() != null ? customer.getWallet().getId() : null
-        );
+        return CustomerDTO.builder()
+                .id(customer.getId())
+                .firstname(customer.getFirstname())
+                .lastname(customer.getLastname())
+                .birthdate(customer.getBirthdate())
+                .authUserId(customer.getAuthUser() != null ? customer.getAuthUser().getId() : null)
+                .walletId(customer.getWallet() != null ? customer.getWallet().getId() : null)
+                .build();
     }
 
     public static Customer toEntity(CustomerDTO dto, AuthUser authUser, Wallet wallet) {
         if (dto == null) return null;
 
-        Customer customer = new Customer();
-        customer.setId(dto.getId());
-        customer.setFirstname(dto.getFirstname());
-        customer.setLastname(dto.getLastname());
-        customer.setBirthdate(dto.getBirthdate());
-        customer.setAuthUser(authUser);
-        customer.setWallet(wallet);
-        return customer;
+        return Customer.builder()
+                .id(dto.getId())
+                .firstname(dto.getFirstname())
+                .lastname(dto.getLastname())
+                .birthdate(dto.getBirthdate())
+                .authUser(authUser)
+                .wallet(wallet)
+                .build();
     }
-
 }
