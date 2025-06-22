@@ -21,6 +21,11 @@ public class BookingMapper {
 
     public static Booking toEntity(BookingDTO dto, Restaurant restaurant, Bookable bookable, Planner planner) {
         if (dto == null) return null;
+
+        if (restaurant != null && bookable != null) {
+            throw new IllegalArgumentException("A booking can be linked to either a Restaurant or a Bookable, not both.");
+        }
+
         return Booking.builder()
                 .id(dto.getId())
                 .date(dto.getDate())

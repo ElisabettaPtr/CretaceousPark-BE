@@ -15,7 +15,6 @@ public class PlannerMapper {
         return PlannerDTO.builder()
                 .id(entity.getId())
                 .date(entity.getDate())
-                .dayTypeId(entity.getDayType() != null ? entity.getDayType().getId() : null)
                 .customerId(entity.getCustomer() != null ? entity.getCustomer().getId() : null)
                 .ticketIds(entity.getTickets() != null ? entity.getTickets().stream()
                         .map(t -> t.getId())
@@ -23,11 +22,13 @@ public class PlannerMapper {
                 .bookingIds(entity.getBookings() != null ? entity.getBookings().stream()
                         .map(b -> b.getId())
                         .collect(Collectors.toList()) : null)
+                .dayType(DayTypeMapper.toDTO(entity.getDayType())) // restituisce il DayType calcolato
                 .build();
     }
 
     public static Planner toEntity(PlannerDTO dto, DayType dayType, Customer customer) {
         if (dto == null) return null;
+
         return Planner.builder()
                 .id(dto.getId())
                 .date(dto.getDate())
@@ -36,4 +37,5 @@ public class PlannerMapper {
                 .build();
     }
 }
+
 

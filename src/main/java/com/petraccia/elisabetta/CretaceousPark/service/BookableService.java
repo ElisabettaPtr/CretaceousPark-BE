@@ -91,15 +91,8 @@ public class BookableService {
         Bookable existingBookable = bookableRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Bookable not found with id: " + id));
 
-        TypeService typeService = null;
-        if (bookableDTO.getTypeServiceId() != null) {
-            typeService = typeServiceRepository.findById(bookableDTO.getTypeServiceId())
-                    .orElseThrow(() -> new ResourceNotFoundException("TypeService not found with id: " + bookableDTO.getTypeServiceId()));
-        }
-
         existingBookable.setName(bookableDTO.getName());
         existingBookable.setPrice(bookableDTO.getPrice());
-        existingBookable.setTypeService(typeService);
 
         Bookable updatedBookable = bookableRepository.save(existingBookable);
         return BookableMapper.toDTO(updatedBookable);

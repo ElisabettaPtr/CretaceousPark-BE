@@ -125,5 +125,4 @@ public class AttractionService {
         return AttractionMapper.toDTO(updatedAttraction);
     }
 
-
 }

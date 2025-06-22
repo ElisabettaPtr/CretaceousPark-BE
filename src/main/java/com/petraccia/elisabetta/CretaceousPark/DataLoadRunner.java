@@ -158,8 +158,8 @@ public class DataLoadRunner implements CommandLineRunner {
         DayType weekend = new DayType();
         weekend.setName("weekend");
         weekend.setOpenTime(LocalTime.of(10, 0));
-        holiday.setCloseTime(LocalTime.of(20, 0));
-        holiday.setOpen(true);
+        weekend.setCloseTime(LocalTime.of(20, 0));
+        weekend.setOpen(true);
 
         DayType summer = new DayType();
         summer.setName("summer");

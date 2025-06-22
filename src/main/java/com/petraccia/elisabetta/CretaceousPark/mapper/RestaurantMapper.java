@@ -4,6 +4,7 @@ import com.petraccia.elisabetta.CretaceousPark.dto.RestaurantDTO;
 import com.petraccia.elisabetta.CretaceousPark.model.Booking;
 import com.petraccia.elisabetta.CretaceousPark.model.Restaurant;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import java.util.List;
@@ -28,15 +29,16 @@ public class RestaurantMapper {
                 .build();
     }
 
-    public static Restaurant toEntity(RestaurantDTO dto, List<Booking> bookings) {
+    public static Restaurant toEntity(RestaurantDTO dto) {
         if (dto == null) return null;
 
         return Restaurant.builder()
                 .id(dto.getId())
                 .name(dto.getName())
                 .kitchenType(dto.getKitchenType())
-                .bookings(bookings)
+                .bookings(new ArrayList<>()) // inizializza come lista vuota
                 .build();
     }
 }
+
 

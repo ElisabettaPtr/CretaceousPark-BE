@@ -32,10 +32,10 @@ public class Planner {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @OneToMany(mappedBy = "planner")
+    @OneToMany(mappedBy = "planner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets;
 
-    @OneToMany(mappedBy = "planner")
+    @OneToMany(mappedBy = "planner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings;
 
 }

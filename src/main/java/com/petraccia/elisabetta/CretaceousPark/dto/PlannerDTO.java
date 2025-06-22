@@ -15,8 +15,11 @@ import java.util.List;
 public class PlannerDTO {
     private Long id;
     private LocalDate date;
-    private Long dayTypeId;
     private Long customerId;
     private List<Long> ticketIds;
     private List<Long> bookingIds;
+
+    // Nuovo campo per mostrare al client il tipo di giorno calcolato (facoltativo, ma utile)
+    private DayTypeDTO dayType;
 }
+
