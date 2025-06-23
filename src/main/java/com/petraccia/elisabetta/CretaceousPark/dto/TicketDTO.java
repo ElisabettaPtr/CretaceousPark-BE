@@ -21,4 +21,3 @@ public class TicketDTO {
     private Long showId;
     private Long plannerId;
 }
-

@@ -33,4 +33,3 @@ public class TypeServiceMapper {
                 .build();
     }
 }
-

@@ -25,15 +25,19 @@ public class TicketMapper {
     public static Ticket toEntity(TicketDTO dto, Attraction attraction, Show show, Planner planner) {
         if (dto == null) return null;
 
+        // Se entrambi attraction e show sono passati, dai precedenza a uno oppure lancia eccezione
+        if (attraction != null && show != null) {
+            throw new IllegalArgumentException("Un ticket può avere solo un attraction oppure uno show, non entrambi.");
+        }
+
         return Ticket.builder()
                 .id(dto.getId())
                 .date(dto.getDate())
                 .price(dto.getPrice())
                 .isSold(dto.isSold())
-                .attraction(attraction)
-                .show(show)
+                .attraction(attraction != null ? attraction : null)
+                .show(show != null && attraction == null ? show : null)
                 .planner(planner)
                 .build();
     }
 }
-

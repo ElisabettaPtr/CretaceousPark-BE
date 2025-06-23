@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingService {
@@ -32,6 +34,31 @@ public class BookingService {
         this.plannerRepository = plannerRepository;
         this.restaurantRepository = restaurantRepository;
         this.bookableRepository = bookableRepository;
+    }
+
+    public List<BookingDTO> getBookingsByCustomerAuthUserId(Long authUserId) {
+        List<Booking> bookings = bookingRepository.findByCustomerAuthUserId(authUserId);
+        return bookings.stream()
+                .map(BookingMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public Long getPlannerIdByAuthUserId(Long authUserId) {
+        Optional<Planner> plannerOpt = plannerRepository.findByCustomerAuthUserId(authUserId);
+        return plannerOpt.map(Planner::getId).orElse(null);
+    }
+
+    public boolean isBookingOwnedByAuthUser(Long bookingId, Long authUserId) {
+        // recupera booking dal repository, con join per risalire all’authUser id
+        Optional<Booking> bookingOpt = bookingRepository.findById(bookingId);
+        if (bookingOpt.isEmpty()) {
+            return false;
+        }
+
+        Booking booking = bookingOpt.get();
+        Long bookingAuthUserId = booking.getPlanner().getCustomer().getAuthUser().getId();
+
+        return bookingAuthUserId.equals(authUserId);
     }
 
     public List<BookingDTO> getAllBookings() {
@@ -158,6 +185,5 @@ public class BookingService {
         Booking updatedBooking = bookingRepository.save(existingBooking);
         return BookingMapper.toDTO(updatedBooking);
     }
-
 
 }

@@ -43,7 +43,12 @@ public class RestaurantService {
             throw new BadRequestException("Restaurant name must not be null.");
         }
 
-        Restaurant restaurant = restaurantRepository.findByName(name)
+        String normalizedInputName = name.toLowerCase().replaceAll("\\s+", "");
+
+        Restaurant restaurant = restaurantRepository.findAll().stream()
+                .filter(r -> r.getName() != null)
+                .filter(r -> r.getName().toLowerCase().replaceAll("\\s+", "").equals(normalizedInputName))
+                .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Restaurant not found with name: " + name));
 
         return RestaurantMapper.toDTO(restaurant);

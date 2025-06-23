@@ -18,10 +18,12 @@ public class CretaceousParkApplication {
 
 		SpringApplication.run(CretaceousParkApplication.class, args);
 
-		// TODO : continue with services (from Booking)
 		// TODO : where needed, add saveAll (service)
 		// TODO : controllers (remember QR code generator for Ticket and PDF generators for some infos)
 		// TODO : some tests
+
+		// TODO : remember you skipped BOOKING, CUSTOMER, PLANNER, TICKET, WALLET in postman testing
+
 		// TODO : postman folder
 
 	}

@@ -5,6 +5,7 @@ import com.petraccia.elisabetta.CretaceousPark.model.Attraction;
 import com.petraccia.elisabetta.CretaceousPark.model.Show;
 import com.petraccia.elisabetta.CretaceousPark.model.Zone;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import java.util.List;
@@ -38,11 +39,8 @@ public class ZoneMapper {
                 .id(dto.getId())
                 .name(dto.getName())
                 .description(dto.getDescription())
-                .attractions(attractions)
-                .shows(shows)
+                .attractions(attractions != null ? attractions : new ArrayList<>())
+                .shows(shows != null ? shows : new ArrayList<>())
                 .build();
     }
 }
-
-
-

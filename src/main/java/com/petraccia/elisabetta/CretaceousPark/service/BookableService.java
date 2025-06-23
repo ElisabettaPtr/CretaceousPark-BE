@@ -49,11 +49,19 @@ public class BookableService {
             throw new BadRequestException("Bookable name must not be null.");
         }
 
-        Bookable bookable = bookableRepository.findByName(name)
+        // Normalizza la stringa ricevuta (minuscolo + rimuovi spazi)
+        String normalizedInputName = name.toLowerCase().replaceAll("\\s+", "");
+
+        // Recupera tutti i bookable e filtra quello che corrisponde normalizzato
+        Bookable bookable = bookableRepository.findAll().stream()
+                .filter(b -> b.getName() != null)
+                .filter(b -> b.getName().toLowerCase().replaceAll("\\s+", "").equals(normalizedInputName))
+                .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Bookable service not found with name: " + name));
 
         return BookableMapper.toDTO(bookable);
     }
+
 
     public BookableDTO saveBookable(BookableDTO bookableDTO) {
         if (bookableDTO.getTypeServiceId() == null) {

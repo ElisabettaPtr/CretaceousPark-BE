@@ -17,4 +17,3 @@ public class TypeServiceDTO {
     private List<Long> bookableServiceIds;
     private List<Long> nonBookableServiceIds;
 }
-

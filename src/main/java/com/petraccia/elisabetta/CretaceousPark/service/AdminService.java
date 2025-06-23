@@ -45,6 +45,19 @@ public class AdminService {
         return AdminMapper.toDTO(admin);
     }
 
+    public AdminDTO getAdminByAuthUserId(Long authUserId) {
+        if (authUserId == null) {
+            throw new BadRequestException("AuthUser ID must not be null.");
+        }
+
+        Admin admin = adminRepository.findByAuthUserId(authUserId);
+        if (admin == null) {
+            throw new ResourceNotFoundException("Admin not found with AuthUser ID: " + authUserId);
+        }
+
+        return AdminMapper.toDTO(admin);
+    }
+
     public AdminDTO saveAdmin(AdminDTO adminDTO) {
         if (adminDTO.getAuthUserId() == null) {
             throw new BadRequestException("AuthUserId must not be null.");

@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PlannerService {
@@ -33,6 +34,10 @@ public class PlannerService {
         this.dayTypeRepository = dayTypeRepository;
         this.bookingRepository = bookingRepository;
         this.ticketRepository = ticketRepository;
+    }
+
+    public boolean isPlannerOwnedByAuthUser(Long plannerId, Long authUserId) {
+        return plannerRepository.existsByIdAndCustomerAuthUserId(plannerId, authUserId);
     }
 
     public List<PlannerDTO> getAllPlanners() {
@@ -53,7 +58,7 @@ public class PlannerService {
         return PlannerMapper.toDTO(planner);
     }
 
-    public PlannerDTO getPlannerByCustomerId(Long customerId) {
+    public List<PlannerDTO> getPlannersByCustomerId(Long customerId) {
         if (customerId == null) {
             throw new BadRequestException("Customer ID must not be null.");
         }
@@ -61,11 +66,13 @@ public class PlannerService {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + customerId));
 
-        Planner planner = plannerRepository.findByCustomer(customer)
-                .orElseThrow(() -> new ResourceNotFoundException("Planner not found for Customer id: " + customerId));
+        List<Planner> planners = plannerRepository.findAllByCustomer(customer);
 
-        return PlannerMapper.toDTO(planner);
+        return planners.stream()
+                .map(PlannerMapper::toDTO)
+                .collect(Collectors.toList());
     }
+
 
     public boolean isPublicHoliday(LocalDate date) {
         int year = date.getYear();
