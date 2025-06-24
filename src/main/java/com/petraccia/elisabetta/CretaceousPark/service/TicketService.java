@@ -85,9 +85,6 @@ public class TicketService {
     }
 
     public TicketDTO saveTicket(TicketDTO ticketDTO) {
-        if (ticketDTO.getPlannerId() == null) {
-            throw new BadRequestException("Planner ID must not be null.");
-        }
 
         if (ticketDTO.getAttractionId() != null && ticketDTO.getShowId() != null) {
             throw new BadRequestException("A ticket can be linked either to an attraction or to a show, not both.");
@@ -97,8 +94,12 @@ public class TicketService {
             throw new BadRequestException("A ticket must be linked to either an attraction or a show.");
         }
 
-        Planner planner = plannerRepository.findById(ticketDTO.getPlannerId())
-                .orElseThrow(() -> new ResourceNotFoundException("Planner not found with id: " + ticketDTO.getPlannerId()));
+        Planner planner = null;
+
+        if(ticketDTO.getPlannerId() != null) {
+            planner = plannerRepository.findById(ticketDTO.getPlannerId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Planner not found with id: " + ticketDTO.getPlannerId()));
+        }
 
         Attraction attraction = null;
         Show show = null;
@@ -144,9 +145,13 @@ public class TicketService {
             throw new BadRequestException("Ticket must be for either an Attraction or a Show, not both.");
         }
 
+        Planner planner = null;
+
         // Recupero il planner
-        Planner planner = plannerRepository.findById(ticketDTO.getPlannerId())
-                .orElseThrow(() -> new ResourceNotFoundException("Planner not found with id: " + ticketDTO.getPlannerId()));
+        if(ticketDTO.getPlannerId() != null) {
+            planner = plannerRepository.findById(ticketDTO.getPlannerId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Planner not found with id: " + ticketDTO.getPlannerId()));
+        }
 
         // Recupero opzionale Restaurant o Bookable
         Attraction attraction = null;
@@ -174,9 +179,10 @@ public class TicketService {
         return TicketMapper.toDTO(updatedTicket);
     }
 
-    public TicketDTO buyTicket(Long ticketId, Long customerId) throws AccessDeniedException {
-        if (ticketId == null || customerId == null) {
-            throw new BadRequestException("Ticket ID and Customer ID must not be null.");
+    @Transactional
+    public TicketDTO buyTicket(Long ticketId, Long plannerId, Long customerId) throws AccessDeniedException {
+        if (ticketId == null || plannerId == null || customerId == null) {
+            throw new BadRequestException("Ticket ID, Planner ID and Customer ID must not be null.");
         }
 
         Ticket ticket = ticketRepository.findById(ticketId)
@@ -186,9 +192,11 @@ public class TicketService {
             throw new BadRequestException("Ticket is already sold.");
         }
 
-        Planner planner = ticket.getPlanner();
-        if (planner == null || planner.getCustomer() == null || !planner.getCustomer().getId().equals(customerId)) {
-            throw new AccessDeniedException("Customer does not own the planner associated with this ticket.");
+        Planner planner = plannerRepository.findById(plannerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Planner not found with id: " + plannerId));
+
+        if (!planner.getCustomer().getId().equals(customerId)) {
+            throw new AccessDeniedException("Customer does not own this planner.");
         }
 
         Customer customer = planner.getCustomer();
@@ -205,15 +213,18 @@ public class TicketService {
             throw new BadRequestException("Insufficient funds in wallet.");
         }
 
-        // Acquisto
+        // Sottraggo il prezzo al saldo wallet
         wallet.setBalance(currentBalance.subtract(price));
+
+        // Associo il planner al ticket e lo segno come venduto
+        ticket.setPlanner(planner);
         ticket.setSold(true);
 
-        // Persisti modifiche
+        // Salvo le modifiche, se usi walletRepository salvalo esplicitamente (di solito in @Transactional si fa automaticamente)
         ticketRepository.save(ticket);
-        // Se usi un walletRepository, salva anche walletRepository.save(wallet);
 
         return TicketMapper.toDTO(ticket);
     }
+
 
 }

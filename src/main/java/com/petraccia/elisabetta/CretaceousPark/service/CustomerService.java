@@ -45,6 +45,10 @@ public class CustomerService {
         return CustomerMapper.toDTO(customer);
     }
 
+    public boolean existsByAuthUserId(AuthUser authUser) {
+        return customerRepository.existsByAuthUser(authUser);
+    }
+
     public CustomerDTO getCustomerByAuthUserId(Long authUserId) {
         if (authUserId == null) {
             throw new BadRequestException("AuthUser ID must not be null.");

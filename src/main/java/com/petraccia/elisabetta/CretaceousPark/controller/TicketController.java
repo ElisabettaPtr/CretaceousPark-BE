@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tickets")
+@RequestMapping("/api/ticket")
 public class TicketController {
 
     private final TicketService ticketService;
@@ -39,35 +39,35 @@ public class TicketController {
 
     /* ENDPOINTS FOR ADMIN */
 
-    @GetMapping
-    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
-    public ResponseEntity<List<TicketDTO>> getAllTickets() {
-        List<TicketDTO> tickets = ticketService.getAllShows();
-        return ResponseEntity.ok(tickets);
-    }
-
-    @PostMapping
+    @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TicketDTO> createTicket(@RequestBody TicketDTO ticketDTO) {
         TicketDTO createdTicket = ticketService.saveTicket(ticketDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTicket);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TicketDTO> updateTicket(@PathVariable Long id, @RequestBody TicketDTO ticketDTO) {
         TicketDTO updatedTicket = ticketService.updateTicket(id, ticketDTO);
         return ResponseEntity.ok(updatedTicket);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteTicket(@PathVariable Long id) {
+    public ResponseEntity<String> deleteTicket(@PathVariable Long id) {
         ticketService.deleteTicketById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Ticket deleted successfully.");
     }
 
-    /* ENDPOINTS FOR CUSTOMER */
+    /* ENDPOINTS FOR ADMIN AND CUSTOMER */
+
+    @GetMapping("/list")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
+    public ResponseEntity<List<TicketDTO>> getAllTickets() {
+        List<TicketDTO> tickets = ticketService.getAllShows();
+        return ResponseEntity.ok(tickets);
+    }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
@@ -91,31 +91,7 @@ public class TicketController {
         return ResponseEntity.ok(ticketDTO);
     }
 
-    @GetMapping("/search")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
-    public ResponseEntity<List<TicketDTO>> findTicketsByAttractionIdOrShowId(
-            @RequestParam(required = false) Long attractionId,
-            @RequestParam(required = false) Long showId,
-            @AuthenticationPrincipal UserDetails userDetails) {
-
-        AuthUser authUser = authUserService.findByUsername(userDetails.getUsername());
-        if (authUser == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-
-        List<TicketDTO> tickets = ticketService.findTicketsByAttractionIdOrShowId(attractionId, showId);
-
-        if (userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CUSTOMER"))) {
-            Long customerId = customerService.getCustomerByAuthUserId(authUser.getId()).getId();
-            List<PlannerDTO> planners = plannerService.getPlannersByCustomerId(customerId);
-
-            // Filtra solo i ticket i cui plannerId sono nella lista dei planner del customer
-            tickets = tickets.stream()
-                    .filter(t -> planners.stream()
-                            .anyMatch(planner -> planner.getId().equals(t.getPlannerId())))
-                    .toList();
-        }
-
-        return ResponseEntity.ok(tickets);
-    }
+    /* ENDPOINTS FOR CUSTOMER */
 
     @GetMapping("/my-tickets")
     @PreAuthorize("hasRole('CUSTOMER')")
@@ -134,20 +110,20 @@ public class TicketController {
         return ResponseEntity.ok(tickets);
     }
 
-    @PostMapping("/buy/{ticketId}")
+    @PostMapping("/buy/{ticketId}/{plannerId}")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<TicketDTO> buyTicket(@PathVariable Long ticketId,
+    public ResponseEntity<String> buyTicket(@PathVariable Long ticketId,
+                                               @PathVariable Long plannerId,
                                                @AuthenticationPrincipal UserDetails userDetails) {
         AuthUser authUser = authUserService.findByUsername(userDetails.getUsername());
         if (authUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        Long customerId = customerService.getCustomerByAuthUserId(authUser.getId()).getId();
-
         try {
-            TicketDTO purchasedTicket = ticketService.buyTicket(ticketId, customerId);
-            return ResponseEntity.ok(purchasedTicket);
+            Long customerId = customerService.getCustomerByAuthUserId(authUser.getId()).getId();
+            TicketDTO purchasedTicket = ticketService.buyTicket(ticketId, plannerId, customerId);
+            return ResponseEntity.ok("Ticket sold successfully.");
         } catch (AccessDeniedException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         } catch (BadRequestException e) {
@@ -156,5 +132,6 @@ public class TicketController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
 
 }

@@ -6,7 +6,6 @@ import com.petraccia.elisabetta.CretaceousPark.dto.WalletDTO;
 import com.petraccia.elisabetta.CretaceousPark.exception.ResourceNotFoundException;
 import com.petraccia.elisabetta.CretaceousPark.exception.UnauthorizedException;
 import com.petraccia.elisabetta.CretaceousPark.service.CustomerService;
-import com.petraccia.elisabetta.CretaceousPark.service.NonBookableService;
 import com.petraccia.elisabetta.CretaceousPark.service.WalletService;
 import com.petraccia.elisabetta.CretaceousPark.spring_jwt.model.AuthUser;
 import com.petraccia.elisabetta.CretaceousPark.spring_jwt.service.AuthUserService;
@@ -36,31 +35,31 @@ public class WalletController {
 
     /* ENDPOINTS FOR ADMIN */
 
-    @GetMapping("/admin/all")
+    @GetMapping("/list")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<WalletDTO>> getAllWallets() {
         return ResponseEntity.ok(walletService.getAllWallets());
     }
 
-    @GetMapping("/admin/{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<WalletDTO> getWalletById(@PathVariable Long id) {
         return ResponseEntity.ok(walletService.getWalletById(id));
     }
 
-    @PostMapping("/admin/add")
+    @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<WalletDTO> saveWallet(@RequestBody WalletDTO walletDTO) {
         return ResponseEntity.ok(walletService.saveWallet(walletDTO));
     }
 
-    @PutMapping("/admin/update/{id}")
+    @PutMapping("/update/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<WalletDTO> updateWallet(@PathVariable Long id, @RequestBody WalletDTO walletDTO) {
         return ResponseEntity.ok(walletService.updateWallet(id, walletDTO));
     }
 
-    @DeleteMapping("/admin/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteWallet(@PathVariable Long id) {
         walletService.deleteWalletById(id);

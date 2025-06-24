@@ -89,7 +89,7 @@ public class PlannerController {
         return ResponseEntity.ok(planners);
     }
 
-    @PostMapping("/add-customer")
+    @PostMapping("/add-my-planner")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<PlannerDTO> savePlannerForCustomer(
             @RequestBody PlannerDTO plannerDTO,
@@ -107,7 +107,7 @@ public class PlannerController {
         return ResponseEntity.ok(savedPlanner);
     }
 
-    @PutMapping("/update-customer/{id}")
+    @PutMapping("/update-my-planner/{id}")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<PlannerDTO> updatePlannerForCustomer(
             @PathVariable Long id,
@@ -135,7 +135,7 @@ public class PlannerController {
         return ResponseEntity.ok(updatedPlanner);
     }
 
-    @DeleteMapping("/delete-customer/{id}")
+    @DeleteMapping("/delete-my-planner/{id}")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<String> deletePlannerForCustomer(
             @PathVariable Long id,

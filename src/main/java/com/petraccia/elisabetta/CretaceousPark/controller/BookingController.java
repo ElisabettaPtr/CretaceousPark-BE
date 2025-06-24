@@ -97,7 +97,7 @@ public class BookingController {
     }
 
     // CUSTOMER può salvare booking per sé, collegandolo al proprio planner
-    @PostMapping("/add-customer")
+    @PostMapping("/save-my-booking")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<BookingDTO> saveBookingForCustomer(
             @RequestBody BookingDTO bookingDTO,
@@ -122,7 +122,7 @@ public class BookingController {
     }
 
     // CUSTOMER può aggiornare solo i propri booking
-    @PutMapping("/update-customer/{id}")
+    @PutMapping("/update-my-booking/{id}")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<BookingDTO> updateBookingForCustomer(
             @PathVariable Long id,
@@ -147,7 +147,7 @@ public class BookingController {
     }
 
     // CUSTOMER può cancellare solo i propri booking
-    @DeleteMapping("/delete-customer/{id}")
+    @DeleteMapping("/delete-my-booking/{id}")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<String> deleteBookingForCustomer(
             @PathVariable Long id,

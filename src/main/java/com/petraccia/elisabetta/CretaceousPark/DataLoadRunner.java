@@ -709,36 +709,42 @@ public class DataLoadRunner implements CommandLineRunner {
         ticket1.setPrice(new BigDecimal("20.00"));
         ticket1.setAttraction(tyrannosaurus);
         ticket1.setPlanner(planner2);
+        ticket1.setSold(true);
 
         Ticket ticket2 = new Ticket();
         ticket2.setDate(LocalDate.of(2025, 7,7));
         ticket2.setPrice(new BigDecimal("20.00"));
         ticket2.setAttraction(tyrannosaurus);
         ticket2.setPlanner(planner1);
+        ticket2.setSold(true);
 
         Ticket ticket3 = new Ticket();
         ticket3.setDate(LocalDate.of(2025, 7,7));
         ticket3.setPrice(new BigDecimal("20.00"));
         ticket3.setAttraction(tyrannosaurus);
-        ticket2.setPlanner(planner1);
+        ticket3.setPlanner(planner1);
+        ticket3.setSold(true);
 
         Ticket ticket4 = new Ticket();
         ticket4.setDate(LocalDate.of(2025, 7,7));
         ticket4.setPrice(new BigDecimal("20.00"));
         ticket4.setAttraction(mosasaurus);
         ticket4.setPlanner(planner3);
+        ticket4.setSold(true);
 
         Ticket ticket5 = new Ticket();
         ticket5.setDate(LocalDate.of(2025, 7,7));
         ticket5.setPrice(new BigDecimal("20.00"));
         ticket5.setAttraction(mosasaurus);
         ticket5.setPlanner(planner3);
+        ticket5.setSold(true);
 
         Ticket ticket6 = new Ticket();
         ticket6.setDate(LocalDate.of(2025, 7,7));
         ticket6.setPrice(new BigDecimal("20.00"));
         ticket6.setAttraction(mosasaurus);
         ticket6.setPlanner(planner3);
+        ticket6.setSold(true);
 
         Ticket ticket7 = new Ticket();
         ticket7.setDate(LocalDate.of(2025, 7,7));
@@ -755,6 +761,7 @@ public class DataLoadRunner implements CommandLineRunner {
         ticket9.setPrice(new BigDecimal("20.00"));
         ticket9.setAttraction(velociraptor);
         ticket9.setPlanner(planner2);
+        ticket9.setSold(true);
 
         Ticket ticket10 = new Ticket();
         ticket10.setDate(LocalDate.of(2025, 7,7));
@@ -765,13 +772,15 @@ public class DataLoadRunner implements CommandLineRunner {
         ticket11.setDate(LocalDate.of(2025, 7,7));
         ticket11.setPrice(new BigDecimal("20.00"));
         ticket11.setAttraction(triceratops);
-        ticket2.setPlanner(planner1);
+        ticket11.setPlanner(planner1);
+        ticket11.setSold(true);
 
         Ticket ticket12 = new Ticket();
         ticket12.setDate(LocalDate.of(2025, 7,7));
         ticket12.setPrice(new BigDecimal("20.00"));
         ticket12.setAttraction(triceratops);
-        ticket2.setPlanner(planner1);
+        ticket12.setPlanner(planner1);
+        ticket12.setSold(true);
 
         Ticket ticket13 = new Ticket();
         ticket13.setDate(LocalDate.of(2025, 7,7));
@@ -788,12 +797,14 @@ public class DataLoadRunner implements CommandLineRunner {
         ticket15.setPrice(new BigDecimal("20.00"));
         ticket15.setShow(marineMonsters);
         ticket15.setPlanner(planner1);
+        ticket15.setSold(true);
 
         Ticket ticket16 = new Ticket();
         ticket16.setDate(LocalDate.of(2025, 7,7));
         ticket16.setPrice(new BigDecimal("20.00"));
         ticket16.setShow(marineMonsters);
         ticket16.setPlanner(planner1);
+        ticket16.setSold(true);
 
         Ticket ticket17 = new Ticket();
         ticket17.setDate(LocalDate.of(2025, 7,7));
@@ -805,12 +816,14 @@ public class DataLoadRunner implements CommandLineRunner {
         ticket18.setPrice(new BigDecimal("20.00"));
         ticket18.setShow(marineMonsters);
         ticket18.setPlanner(planner2);
+        ticket18.setSold(true);
 
         Ticket ticket19 = new Ticket();
         ticket19.setDate(LocalDate.of(2025, 7,7));
         ticket19.setPrice(new BigDecimal("20.00"));
         ticket19.setShow(raptorTactics);
         ticket19.setPlanner(planner2);
+        ticket19.setSold(true);
 
         Ticket ticket20 = new Ticket();
         ticket20.setDate(LocalDate.of(2025, 7,7));
@@ -832,12 +845,14 @@ public class DataLoadRunner implements CommandLineRunner {
         ticket23.setPrice(new BigDecimal("20.00"));
         ticket23.setShow(raptorTactics);
         ticket23.setPlanner(planner1);
+        ticket23.setSold(true);
 
         Ticket ticket24 = new Ticket();
         ticket24.setDate(LocalDate.of(2025, 7,7));
         ticket24.setPrice(new BigDecimal("20.00"));
         ticket24.setShow(raptorTactics);
         ticket24.setPlanner(planner1);
+        ticket24.setSold(true);
 
         Ticket ticket25 = new Ticket();
         ticket25.setDate(LocalDate.of(2025, 7,7));
@@ -849,30 +864,35 @@ public class DataLoadRunner implements CommandLineRunner {
         ticket26.setPrice(new BigDecimal("20.00"));
         ticket26.setShow(fossilsUncovered);
         ticket26.setPlanner(planner1);
+        ticket26.setSold(true);
 
         Ticket ticket27 = new Ticket();
         ticket27.setDate(LocalDate.of(2025, 7,7));
         ticket27.setPrice(new BigDecimal("20.00"));
         ticket27.setShow(fossilsUncovered);
         ticket27.setPlanner(planner1);
+        ticket27.setSold(true);
 
         Ticket ticket28 = new Ticket();
         ticket28.setDate(LocalDate.of(2025, 7,7));
         ticket28.setPrice(new BigDecimal("20.00"));
         ticket28.setShow(fossilsUncovered);
         ticket28.setPlanner(planner3);
+        ticket28.setSold(true);
 
         Ticket ticket29 = new Ticket();
         ticket29.setDate(LocalDate.of(2025, 7,7));
         ticket29.setPrice(new BigDecimal("20.00"));
         ticket29.setShow(fossilsUncovered);
         ticket29.setPlanner(planner3);
+        ticket29.setSold(true);
 
         Ticket ticket30 = new Ticket();
         ticket30.setDate(LocalDate.of(2025, 7,7));
         ticket30.setPrice(new BigDecimal("20.00"));
         ticket30.setShow(fossilsUncovered);
         ticket30.setPlanner(planner3);
+        ticket30.setSold(true);
 
         List<Ticket> tickets = List.of(ticket1, ticket2, ticket3, ticket4, ticket5, ticket6, ticket7, ticket8, ticket9, ticket10, ticket11,ticket12, ticket13, ticket14, ticket15, ticket16, ticket17, ticket18, ticket19, ticket20, ticket21, ticket22, ticket23, ticket24, ticket25, ticket26, ticket27, ticket28, ticket29, ticket30);
         ticketRepository.saveAll(tickets);

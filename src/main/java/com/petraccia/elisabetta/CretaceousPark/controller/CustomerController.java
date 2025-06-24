@@ -70,7 +70,32 @@ public class CustomerController {
         }
     }
 
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> deleteCustomer(@PathVariable Long id) {
+        customerService.deleteCustomerById(id);
+        return ResponseEntity.ok("Customer with ID " + id + " deleted successfully.");
+    }
+
     /* ENDPOINT PER CUSTOMER */
+
+    // CUSTOMER ottiene i propri dati
+    @GetMapping("/get-self")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<CustomerDTO> getSelf(@AuthenticationPrincipal UserDetails userDetails) {
+
+        AuthUser authUser = authUserService.findByUsername(userDetails.getUsername());
+        if (authUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        CustomerDTO customerDTO = customerService.getCustomerByAuthUserId(authUser.getId());
+        if (customerDTO == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.ok(customerDTO);
+    }
 
     // CUSTOMER salva i propri dati (crea un nuovo customer)
     @PostMapping("/save-self")
@@ -87,7 +112,7 @@ public class CustomerController {
         customerDTO.setAuthUserId(authUser.getId());
 
         // Se esiste già un customer associato, rifiuta la creazione (o potresti decidere di aggiornarlo)
-        if (customerService.getCustomerByAuthUserId(authUser.getId()) != null) {
+        if (customerService.existsByAuthUserId(authUser)) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(null); // Oppure un messaggio di errore più dettagliato
         }
@@ -140,6 +165,5 @@ public class CustomerController {
 
         return ResponseEntity.ok("Customer deleted successfully");
     }
-
 
 }
