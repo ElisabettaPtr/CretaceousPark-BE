@@ -428,26 +428,13 @@ public class DataLoadRunner implements CommandLineRunner {
         attractionRepository.save(ouranosaurus);
 
         // Crystal Coast Lagoons
-        Attraction mosasaurus = new Attraction();
-        mosasaurus.setName("Mosasaurus");
-        mosasaurus.setDescription("Mosasaurus hoffmannii – Giant marine predator ruling lagoon waters in the Late Cretaceous (~70-66 Mya). Length: up to 17 meters. Habitat: warm shallow seas and lagoons.");
-        mosasaurus.setDangerLevel(DangerLevel.EXTREME);
-        mosasaurus.setZone(zone4);
-        attractionRepository.save(mosasaurus);
 
-        Attraction elasmosaurus = new Attraction();
-        elasmosaurus.setName("Elasmosaurus");
-        elasmosaurus.setDescription("Elasmosaurus platyurus – Long-necked marine reptile gliding in lagoon waters. Late Cretaceous (~80-65 Mya). Length: ~14 meters. Diet: fish and small marine animals. Habitat: coastal lagoons and shallow seas.");
-        elasmosaurus.setDangerLevel(DangerLevel.HIGH);
-        elasmosaurus.setZone(zone4);
-        attractionRepository.save(elasmosaurus);
-
-        Attraction archelon = new Attraction();
-        archelon.setName("Archelon");
-        archelon.setDescription("Archelon ischyros – Massive prehistoric sea turtle from the Late Cretaceous (~75-65 Mya). Length: up to 4 meters. Habitat: warm coastal waters and lagoons.");
-        archelon.setDangerLevel(DangerLevel.LOW);
-        archelon.setZone(zone4);
-        attractionRepository.save(archelon);
+//        Attraction archelon = new Attraction();
+//        archelon.setName("Archelon");
+//        archelon.setDescription("Archelon ischyros – Massive prehistoric sea turtle from the Late Cretaceous (~75-65 Mya). Length: up to 4 meters. Habitat: warm coastal waters and lagoons.");
+//        archelon.setDangerLevel(DangerLevel.LOW);
+//        archelon.setZone(zone4);
+//        attractionRepository.save(archelon);
 
         Attraction hesperornis = new Attraction();
         hesperornis.setName("Hesperornis");
@@ -456,34 +443,48 @@ public class DataLoadRunner implements CommandLineRunner {
         hesperornis.setZone(zone4);
         attractionRepository.save(hesperornis);
 
-        Attraction ichthyornis = new Attraction();
-        ichthyornis.setName("Ichthyornis");
-        ichthyornis.setDescription("Ichthyornis dispar – Early flying bird living near lagoon shores. Late Cretaceous (~95-85 Mya). Habitat: coastal wetlands and lagoons.");
-        ichthyornis.setDangerLevel(DangerLevel.LOW);
-        ichthyornis.setZone(zone4);
-        attractionRepository.save(ichthyornis);
-
         Attraction ammonites = new Attraction();
-        ammonites.setName("Giant Ammonites");
+        ammonites.setName("Giant ammonites");
         ammonites.setDescription("Giant Ammonites – Huge shelled cephalopods spiraling in lagoon depths. Late Cretaceous marine inhabitants.");
         ammonites.setDangerLevel(DangerLevel.LOW);
         ammonites.setZone(zone4);
         attractionRepository.save(ammonites);
 
-        // Abyssal Ocean Realm
-        Attraction kronosaurus = new Attraction();
-        kronosaurus.setName("Kronosaurus");
-        kronosaurus.setDescription("Kronosaurus queenslandicus – Massive pliosaur patrolling the deep ocean. Early Cretaceous (~120-100 Mya). Length: up to 10 meters. Habitat: deep marine waters.");
-        kronosaurus.setDangerLevel(DangerLevel.EXTREME);
-        kronosaurus.setZone(zone5);
-        attractionRepository.save(kronosaurus);
+//        Attraction ichthyornis = new Attraction();
+//        ichthyornis.setName("Ichthyornis");
+//        ichthyornis.setDescription("Ichthyornis dispar – Early flying bird living near lagoon shores. Late Cretaceous (~95-85 Mya). Habitat: coastal wetlands and lagoons.");
+//        ichthyornis.setDangerLevel(DangerLevel.LOW);
+//        ichthyornis.setZone(zone4);
+//        attractionRepository.save(ichthyornis);
 
-        Attraction xiphactinus = new Attraction();
-        xiphactinus.setName("Xiphactinus");
-        xiphactinus.setDescription("Xiphactinus audax – Large predatory fish with sharp teeth. Late Cretaceous (~112-66 Mya). Habitat: open ocean waters.");
-        xiphactinus.setDangerLevel(DangerLevel.HIGH);
-        xiphactinus.setZone(zone5);
-        attractionRepository.save(xiphactinus);
+//        Attraction kronosaurus = new Attraction();
+//        kronosaurus.setName("Kronosaurus");
+//        kronosaurus.setDescription("Kronosaurus queenslandicus – Massive pliosaur patrolling the deep ocean. Early Cretaceous (~120-100 Mya). Length: up to 10 meters. Habitat: deep marine waters.");
+//        kronosaurus.setDangerLevel(DangerLevel.EXTREME);
+//        kronosaurus.setZone(zone5);
+//        attractionRepository.save(kronosaurus);
+
+//        Attraction xiphactinus = new Attraction();
+//        xiphactinus.setName("Xiphactinus");
+//        xiphactinus.setDescription("Xiphactinus audax – Large predatory fish with sharp teeth. Late Cretaceous (~112-66 Mya). Habitat: open ocean waters.");
+//        xiphactinus.setDangerLevel(DangerLevel.HIGH);
+//        xiphactinus.setZone(zone5);
+//        attractionRepository.save(xiphactinus);
+
+        // Abyssal Ocean Realm
+        Attraction mosasaurus = new Attraction();
+        mosasaurus.setName("Mosasaurus");
+        mosasaurus.setDescription("Mosasaurus hoffmannii – Giant marine predator ruling lagoon waters in the Late Cretaceous (~70-66 Mya). Length: up to 17 meters. Habitat: warm shallow seas and lagoons.");
+        mosasaurus.setDangerLevel(DangerLevel.EXTREME);
+        mosasaurus.setZone(zone5);
+        attractionRepository.save(mosasaurus);
+
+        Attraction elasmosaurus = new Attraction();
+        elasmosaurus.setName("Elasmosaurus");
+        elasmosaurus.setDescription("Elasmosaurus platyurus – Long-necked marine reptile gliding in lagoon waters. Late Cretaceous (~80-65 Mya). Length: ~14 meters. Diet: fish and small marine animals. Habitat: coastal lagoons and shallow seas.");
+        elasmosaurus.setDangerLevel(DangerLevel.HIGH);
+        elasmosaurus.setZone(zone5);
+        attractionRepository.save(elasmosaurus);
 
         // Wings Over the Cretaceous
         Attraction pterosaurs = new Attraction();
@@ -494,14 +495,14 @@ public class DataLoadRunner implements CommandLineRunner {
         attractionRepository.save(pterosaurs);
 
         Attraction hesperornisSky = new Attraction();
-        hesperornisSky.setName("Hesperornis (Flying)");
+        hesperornisSky.setName("Hesperornis(flying)");
         hesperornisSky.setDescription("Hesperornis regalis – Early aquatic bird capable of flight over shorelines. Late Cretaceous (~85-70 Mya). Habitat: coastal waters and lagoons.");
         hesperornisSky.setDangerLevel(DangerLevel.LOW);
         hesperornisSky.setZone(zone6);
         attractionRepository.save(hesperornisSky);
 
         Attraction ichthyornisSky = new Attraction();
-        ichthyornisSky.setName("Ichthyornis (Flying)");
+        ichthyornisSky.setName("Ichthyornis(flying)");
         ichthyornisSky.setDescription("Ichthyornis dispar – Ancient bird gliding above lagoon and coastal areas. Late Cretaceous (~95-85 Mya). Habitat: coastal wetlands.");
         ichthyornisSky.setDangerLevel(DangerLevel.LOW);
         ichthyornisSky.setZone(zone6);
@@ -516,7 +517,7 @@ public class DataLoadRunner implements CommandLineRunner {
         attractionRepository.save(museum);
 
         Attraction geneticsLab = new Attraction();
-        geneticsLab.setName("Genetics Lab");
+        geneticsLab.setName("Genetics lab");
         geneticsLab.setDescription("Get a glimpse into the science behind the dinosaurs. Witness DNA sequencing, embryo incubation, and ask our scientists questions — as long as they’re not hiding something.");
         geneticsLab.setDangerLevel(DangerLevel.MAYBE_SAFE_MAYBE_THERE_ARE_RAPTORS);
         geneticsLab.setZone(zone7);

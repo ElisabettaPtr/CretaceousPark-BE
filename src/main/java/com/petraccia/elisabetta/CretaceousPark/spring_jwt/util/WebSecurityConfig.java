@@ -98,7 +98,7 @@ public class WebSecurityConfig {
             ).permitAll()
   
           // Tutte le altre richieste devono essere autenticate
-          .anyRequest().authenticated();
+          .anyRequest().permitAll();;
   
       // Configura il provider di autenticazione
       http.authenticationProvider(authenticationProvider());
